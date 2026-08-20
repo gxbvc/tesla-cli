@@ -72,6 +72,7 @@ async function exchangeCodeForToken(code: string): Promise<void> {
     redirect_uri: TESLA_REDIRECT_URI,
   });
   updateEnvVar("TESLA_REFRESH_TOKEN", json.refresh_token);
+  process.env.TESLA_REFRESH_TOKEN = json.refresh_token;
   writeTokenCache({
     access_token: json.access_token,
     expires_at: Date.now() + json.expires_in * 1000,
@@ -90,6 +91,7 @@ export async function refreshAccessToken(): Promise<string> {
     refresh_token: refreshToken,
   });
   updateEnvVar("TESLA_REFRESH_TOKEN", json.refresh_token);
+  process.env.TESLA_REFRESH_TOKEN = json.refresh_token;
   const cache: TokenCache = {
     access_token: json.access_token,
     expires_at: Date.now() + json.expires_in * 1000,
