@@ -31,9 +31,9 @@ JSON envelope: `{"ok": true, "data": {...}}` or `{"ok": false, "error": "..."}`.
 - `TESLA_REFRESH_TOKEN` lives in `.env` only, updated on every refresh (refresh tokens are single-use).
 - `.token.json` (gitignored) caches only the short-lived access token.
 - `register` uses a separate client_credentials partner token, never mixed into vehicle calls.
-- `lock`/`unlock`/`honk`/`climate`/`charge` go through `TESLA_PROXY_URL` if set (required for 2021+ cars); otherwise they hit the Fleet API directly and will fail with Tesla's error on unsupported cars.
+- `lock`/`unlock`/`honk`/`climate`/`charge` go through `TESLA_PROXY_URL` (`https://localhost:4443`) via `tesla-http-proxy` (launchd `vc.gxb.tesla-http-proxy`). Reads still hit Fleet API directly.
 
 ## Gotchas
 
 - Billing limit on the Tesla developer account defaults to $0 — all vehicle calls get rejected until a payment method + limit are set in the dashboard.
-- `tesla-http-proxy` serves a self-signed cert; set `NODE_EXTRA_CA_CERTS` to its `tls-cert.pem` or requests through `TESLA_PROXY_URL` fail on TLS.
+- Proxy logs: `~/tools/tesla-cli/proxy.log`. Restart: `launchctl kickstart -k gui/$(id -u)/vc.gxb.tesla-http-proxy`.

@@ -34,15 +34,7 @@ Tesla developer accounts default to a **$0 billing limit**, which silently rejec
 
 ### Command signing (2021+ cars)
 
-Reads (`vehicles`, `status`, `wake`) work directly against the Fleet API. Commands (`lock`, `unlock`, `honk`, `climate`, `charge`) require signed requests on 2021+ vehicles, which means running [`tesla-http-proxy`](https://github.com/teslamotors/vehicle-command) locally and setting `TESLA_PROXY_URL` (e.g. `https://localhost:4443`) in `.env`. Installing/running the proxy is out of scope for this CLI.
-
-The proxy serves a self-signed cert, so Node's `fetch` will reject it unless you set:
-
-```bash
-export NODE_EXTRA_CA_CERTS=/path/to/tesla-http-proxy/tls-cert.pem
-```
-
-Without the proxy, command calls hit the Fleet API directly and surface Tesla's real error (this CLI does not fake success).
+Reads (`vehicles`, `status`, `wake`) hit the Fleet API directly. Commands (`lock`, `unlock`, `honk`, `climate`, `charge`) go through local `tesla-http-proxy` on `https://localhost:4443` (`TESLA_PROXY_URL`). The proxy is kept running by launchd (`vc.gxb.tesla-http-proxy`). The `tesla-cli` wrapper trusts `tls-cert.pem` automatically.
 
 ## Commands
 

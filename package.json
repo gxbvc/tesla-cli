@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "tesla-cli": "./bin/tesla-cli.js"
+    "tesla-cli": "./bin/tesla-cli"
   },
   "scripts": {
     "build": "tsc",

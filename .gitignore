@@ -5,3 +5,7 @@ dist/
 .token.json
 private-key.pem
 public-key.pem
+tls-cert.pem
+tls-key.pem
+.tesla-cache.json
+proxy.log
